@@ -1,0 +1,54 @@
+name: Build Windows EXE + Installer
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["work", "main", "master"]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller
+
+      - name: Build EXE (PyInstaller)
+        shell: pwsh
+        run: |
+          ./scripts/build_windows.ps1
+
+      - name: Install Inno Setup
+        shell: pwsh
+        run: |
+          choco install innosetup --no-progress -y
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /DMyAppVersion=1.0.0 /DMyAppPublisher="Standalone Macro" /DMyAppURL=https://github.com/ installer/StandaloneMacro.iss
+
+      - name: Upload EXE artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: StandaloneMacro-exe
+          path: dist/StandaloneMacro.exe
+          if-no-files-found: error
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: StandaloneMacro-installer
+          path: installer/output/StandaloneMacroSetup.exe
+          if-no-files-found: error
