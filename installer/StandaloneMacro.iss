@@ -1,6 +1,13 @@
 #define MyAppName "Standalone Macro Studio"
-#define MyAppVersion "1.0.0"
-#define MyAppPublisher "Standalone Macro"
+#ifndef MyAppVersion
+  #define MyAppVersion "1.0.0"
+#endif
+#ifndef MyAppPublisher
+  #define MyAppPublisher "Standalone Macro"
+#endif
+#ifndef MyAppURL
+  #define MyAppURL "https://github.com/"
+#endif
 #define MyAppExeName "StandaloneMacro.exe"
 
 [Setup]
@@ -8,9 +15,9 @@ AppId={{DAB17E92-9B10-4B2C-90EB-FF0EE815D112}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
-AppPublisherURL=https://example.com
-AppSupportURL=https://example.com
-AppUpdatesURL=https://example.com
+AppPublisherURL={#MyAppURL}
+AppSupportURL={#MyAppURL}
+AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\StandaloneMacroStudio
 DefaultGroupName=Standalone Macro Studio
 OutputDir=output

@@ -36,6 +36,15 @@ Deze repository bevat nu ook een **fatsoenlijke Windows EXE + installer-flow**:
 build_installer.bat
 ```
 
+Optioneel kun je metadata meegeven (handig voor release builds):
+
+```bat
+set APP_VERSION=1.2.0
+set APP_PUBLISHER=Jouw Bedrijf
+set APP_URL=https://jouwdomein.nl
+build_installer.bat
+```
+
 Wat je krijgt:
 - Zonder Inno Setup: `dist\StandaloneMacro.exe` (onefile GUI executable)
 - Met Inno Setup: `installer\output\StandaloneMacroSetup.exe` (wizard installer + uninstall + snelkoppelingen)
@@ -58,3 +67,9 @@ powershell -ExecutionPolicy Bypass -File .\sign_windows.ps1 -PfxPath "C:\certs\c
 Hiermee teken je:
 - `dist\StandaloneMacro.exe`
 - `installer\output\StandaloneMacroSetup.exe`
+
+## Snelle checks
+```bash
+python3 -m py_compile macro_app.py
+python3 -m unittest tests/test_project_files.py
+```

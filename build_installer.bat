@@ -27,13 +27,17 @@ if exist assets\app.ico (
 pyinstaller --noconfirm --clean --windowed --onefile --name StandaloneMacro --version-file windows\version_info.txt %ICON_ARG% macro_app.py
 if errorlevel 1 exit /b 1
 
+if "%APP_VERSION%"=="" set APP_VERSION=1.0.0
+if "%APP_PUBLISHER%"=="" set APP_PUBLISHER=Standalone Macro
+if "%APP_URL%"=="" set APP_URL=https://github.com/
+
 set ISCC_PATH=C:\Program Files (x86)\Inno Setup 6\ISCC.exe
 if not exist "%ISCC_PATH%" (
   echo [WARNING] Inno Setup niet gevonden. EXE staat in dist\StandaloneMacro.exe
   exit /b 0
 )
 
-"%ISCC_PATH%" installer\StandaloneMacro.iss
+"%ISCC_PATH%" /DMyAppVersion=%APP_VERSION% /DMyAppPublisher="%APP_PUBLISHER%" /DMyAppURL=%APP_URL% installer\StandaloneMacro.iss
 if errorlevel 1 exit /b 1
 
 echo Klaar. Installer staat in installer\output\
