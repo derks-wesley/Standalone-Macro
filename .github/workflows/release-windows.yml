@@ -33,7 +33,7 @@ jobs:
       - name: Build EXE
         shell: pwsh
         run: |
-          python -m PyInstaller --noconfirm --clean --windowed --onefile --name StandaloneMacro --version-file windows/version_info.txt macro_app.py
+          ./scripts/build_windows.ps1
 
       - name: Install Inno Setup
         shell: pwsh

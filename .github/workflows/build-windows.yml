@@ -27,9 +27,7 @@ jobs:
       - name: Build EXE (PyInstaller)
         shell: pwsh
         run: |
-          $iconArg = ""
-          if (Test-Path "assets/app.ico") { $iconArg = "--icon assets/app.ico" }
-          python -m PyInstaller --noconfirm --clean --windowed --onefile --name StandaloneMacro --version-file windows/version_info.txt $iconArg macro_app.py
+          ./scripts/build_windows.ps1
 
       - name: Install Inno Setup
         shell: pwsh
