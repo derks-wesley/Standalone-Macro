@@ -33,19 +33,7 @@ jobs:
       - name: Build EXE
         shell: pwsh
         run: |
-          $pyiArgs = @(
-            "--noconfirm",
-            "--clean",
-            "--windowed",
-            "--onefile",
-            "--name", "StandaloneMacro",
-            "--version-file", "windows/version_info.txt",
-            "macro_app.py"
-          )
-          if (Test-Path "assets/app.ico") {
-            $pyiArgs = @("--icon", "assets/app.ico") + $pyiArgs
-          }
-          & pyinstaller @pyiArgs
+          python -m PyInstaller --noconfirm --clean --windowed --onefile --name StandaloneMacro --version-file windows/version_info.txt macro_app.py
 
       - name: Install Inno Setup
         shell: pwsh
